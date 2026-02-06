@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- ✅ EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -35,7 +38,6 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
 
     /* ✨ Sparkles */
     .sparkle {
@@ -202,100 +204,113 @@
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(25); opacity: 0; }
     }
+
+    /* 💌 Message Form */
+    .msg-box {
+      margin-top: 35px;
+    }
+
+    .msg-input, .msg-textarea {
+      width: 90%;
+      max-width: 420px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 2px solid #764ba2;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 12px;
+      font-family: Poppins, sans-serif;
+    }
+
+    .msg-textarea {
+      resize: none;
+    }
+
+    #openMsgBtn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      width: 260px;
+    }
+
+    #sendMsgBtn {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      width: 220px;
+    }
+
+    #msgStatus {
+      margin-top: 14px;
+      font-weight: 700;
+      min-height: 22px;
+    }
+
     /* 📱 Mobile Responsive */
-@media (max-width: 768px) {
-  .proposal-card {
-    padding: 35px 20px;
-    border-radius: 25px;
-    min-height: 520px;
-    width: 92%;
-  }
+    @media (max-width: 768px) {
+      .proposal-card {
+        padding: 35px 20px;
+        border-radius: 25px;
+        min-height: 520px;
+        width: 92%;
+      }
 
-  .proposal-card h1 {
-    font-size: 2.6rem;
-  }
+      .proposal-card h1 { font-size: 2.6rem; }
 
-  .subtitle {
-    font-size: 1rem;
-    margin-bottom: 35px;
-  }
+      .subtitle {
+        font-size: 1rem;
+        margin-bottom: 35px;
+      }
 
-  button {
-    width: 200px;
-    padding: 16px 30px;
-    font-size: 1.05rem;
-  }
+      button {
+        width: 200px;
+        padding: 16px 30px;
+        font-size: 1.05rem;
+      }
 
-  .button-area {
-    height: 260px;
-  }
+      .button-area { height: 260px; }
 
-  #noBtn {
-    top: 90px;
-    max-width: 190px;
-  }
+      #noBtn { top: 90px; max-width: 190px; }
 
-  .success-message h2 {
-    font-size: 2.4rem;
-  }
+      .success-message h2 { font-size: 2.4rem; }
 
-  #typingText {
-    font-size: 1.15rem;
-  }
+      #typingText { font-size: 1.15rem; }
 
-  .sticker {
-    font-size: 45px;
-  }
-}
+      .sticker { font-size: 45px; }
+    }
 
-/* 📱 Extra Small Phones */
-@media (max-width: 480px) {
-  .proposal-card {
-    padding: 28px 16px;
-    border-radius: 20px;
-    min-height: 500px;
-  }
+    @media (max-width: 480px) {
+      .proposal-card {
+        padding: 28px 16px;
+        border-radius: 20px;
+        min-height: 500px;
+      }
 
-  .proposal-card h1 {
-    font-size: 2.2rem;
-  }
+      .proposal-card h1 { font-size: 2.2rem; }
 
-  .subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 28px;
-  }
+      .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 28px;
+      }
 
-  button {
-    width: 185px;
-    padding: 14px 25px;
-    font-size: 1rem;
-  }
+      button {
+        width: 185px;
+        padding: 14px 25px;
+        font-size: 1rem;
+      }
 
-  .button-area {
-    height: 240px;
-  }
+      .button-area { height: 240px; }
 
-  #noBtn {
-    top: 85px;
-  }
+      #noBtn { top: 85px; }
 
-  .success-message h2 {
-    font-size: 2.1rem;
-  }
+      .success-message h2 { font-size: 2.1rem; }
 
-  #typingText {
-    font-size: 1.05rem;
-  }
+      #typingText { font-size: 1.05rem; }
 
-  .sticker {
-    font-size: 40px;
-  }
-}
+      .sticker { font-size: 40px; }
+    }
   </style>
 </head>
 
 <body>
-
 
   <div class="proposal-card">
     <div id="proposalContent">
@@ -329,10 +344,29 @@
         <div class="sticker">😘</div>
         <div class="sticker">🌹</div>
       </div>
+
+      <!-- 💌 Send message section -->
+      <div class="msg-box">
+        <button id="openMsgBtn">💕 Waiting for your message</button>
+
+        <div id="msgForm" style="display:none; margin-top: 25px;">
+          <input id="nameInput" class="msg-input" type="text" placeholder="Your Name 💕" />
+          <textarea id="msgInput" class="msg-textarea" placeholder="Write your message... 💖" rows="4"></textarea>
+
+          <br>
+
+          <button id="sendMsgBtn">🚀 Send</button>
+
+          <p id="msgStatus"></p>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
+    // ✅ EmailJS init (replace key)
+    emailjs.init("cumkeVQ53zyMWbfoc");
+
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const buttonArea = document.getElementById("buttonArea");
@@ -340,21 +374,28 @@
     const successMessage = document.getElementById("successMessage");
     const typingText = document.getElementById("typingText");
 
+    // 💌 Message UI
+    const openMsgBtn = document.getElementById("openMsgBtn");
+    const msgForm = document.getElementById("msgForm");
+    const sendMsgBtn = document.getElementById("sendMsgBtn");
+    const nameInput = document.getElementById("nameInput");
+    const msgInput = document.getElementById("msgInput");
+    const msgStatus = document.getElementById("msgStatus");
 
     const phrases = [
-        "Think again 🥺 ",
-        "Please reconsider 🥺",
-        "Are you sure? 😳",
-        "Don’t break my heart 💔",
-        "Try again 😆",
-        "Nooo 😭",
-        "Pleaseee 🙏",
-        "You can’t escape 😎",
-        "One more chance 💘",
-        "Last chance 😭",
-        "Really?? 😅",
-        "Waittt 😭",
-      ];
+      "Think again 🥺 ",
+      "Please reconsider 🥺",
+      "Are you sure? 😳",
+      "Don’t break my heart 💔",
+      "Try again 😆",
+      "Nooo 😭",
+      "Pleaseee 🙏",
+      "You can’t escape 😎",
+      "One more chance 💘",
+      "Last chance 😭",
+      "Really?? 😅",
+      "Waittt 😭",
+    ];
 
     let count = 0;
 
@@ -362,7 +403,7 @@
     window.lastMouseX = 0;
     window.lastMouseY = 0;
 
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("mouseover", (e) => {
       window.lastMouseX = e.clientX;
       window.lastMouseY = e.clientY;
     });
@@ -422,15 +463,6 @@
       launchConfetti();
       startTypingEffect();
       startFireworks();
-
-      // Auto play music after yes click
-      if (!isPlaying) {
-        try {
-          await bgMusic.play();
-          isPlaying = true;
-          musicBtn.innerText = "⏸ Pause Music";
-        } catch (e) {}
-      }
     });
 
     /* 🎉 Confetti */
@@ -512,6 +544,45 @@
         if (fireCount > 20) clearInterval(fireInterval);
       }, 250);
     }
+
+    // 💌 Open message form
+    openMsgBtn.addEventListener("click", () => {
+      msgForm.style.display = "block";
+      openMsgBtn.style.display = "none";
+    });
+
+    // 💌 Send message
+    sendMsgBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      const msg = msgInput.value.trim();
+
+      if (!name || !msg) {
+        msgStatus.innerText = "⚠️ Please enter your name and message.";
+        msgStatus.style.color = "#d63384";
+        return;
+      }
+
+      msgStatus.innerText = "Sending... 💌";
+      msgStatus.style.color = "#764ba2";
+
+      // ✅ EmailJS send (template keys must match: name, time, message)
+      emailjs.send("service_x80eitg", "template_6iidkbt", {
+        name: name,
+        time: new Date().toLocaleString(),
+        message: msg
+      })
+      .then(() => {
+        msgStatus.innerText = "✅ Message sent successfully! 💖";
+        msgStatus.style.color = "green";
+        nameInput.value = "";
+        msgInput.value = "";
+      })
+      .catch((err) => {
+        console.log(err);
+        msgStatus.innerText = "❌ Failed to send. Try again!";
+        msgStatus.style.color = "red";
+      });
+    });
 
     createSparkles();
     setInterval(createHeart, 400);
