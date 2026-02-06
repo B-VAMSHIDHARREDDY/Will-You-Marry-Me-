@@ -202,6 +202,95 @@
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(25); opacity: 0; }
     }
+    /* 📱 Mobile Responsive */
+@media (max-width: 768px) {
+  .proposal-card {
+    padding: 35px 20px;
+    border-radius: 25px;
+    min-height: 520px;
+    width: 92%;
+  }
+
+  .proposal-card h1 {
+    font-size: 2.6rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 35px;
+  }
+
+  button {
+    width: 200px;
+    padding: 16px 30px;
+    font-size: 1.05rem;
+  }
+
+  .button-area {
+    height: 260px;
+  }
+
+  #noBtn {
+    top: 90px;
+    max-width: 190px;
+  }
+
+  .success-message h2 {
+    font-size: 2.4rem;
+  }
+
+  #typingText {
+    font-size: 1.15rem;
+  }
+
+  .sticker {
+    font-size: 45px;
+  }
+}
+
+/* 📱 Extra Small Phones */
+@media (max-width: 480px) {
+  .proposal-card {
+    padding: 28px 16px;
+    border-radius: 20px;
+    min-height: 500px;
+  }
+
+  .proposal-card h1 {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  button {
+    width: 185px;
+    padding: 14px 25px;
+    font-size: 1rem;
+  }
+
+  .button-area {
+    height: 240px;
+  }
+
+  #noBtn {
+    top: 85px;
+  }
+
+  .success-message h2 {
+    font-size: 2.1rem;
+  }
+
+  #typingText {
+    font-size: 1.05rem;
+  }
+
+  .sticker {
+    font-size: 40px;
+  }
+}
   </style>
 </head>
 
@@ -253,12 +342,19 @@
 
 
     const phrases = [
-      "NOOO 😭",
-      "Think again!",
-      "Pleaseeee 🥺",
-      "Click YES 😇",
-      "Wait wait 😭",
-    ];
+        "Think again 🥺 ",
+        "Please reconsider 🥺",
+        "Are you sure? 😳",
+        "Don’t break my heart 💔",
+        "Try again 😆",
+        "Nooo 😭",
+        "Pleaseee 🙏",
+        "You can’t escape 😎",
+        "One more chance 💘",
+        "Last chance 😭",
+        "Really?? 😅",
+        "Waittt 😭",
+      ];
 
     let count = 0;
 
@@ -309,7 +405,7 @@
 
     // NO button events
     noBtn.addEventListener("mouseover", moveNoButton);
-    noBtn.addEventListener("mousemove", (e) => {
+    noBtn.addEventListener("click", (e) => {
       e.preventDefault();
       moveNoButton();
     });
