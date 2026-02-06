@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Marry Me? 💍</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg,
+          #667eea 0%,
+          #764ba2 25%,
+          #f093fb 50%,
+          #f5576c 75%,
+          #ffd89b 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+
+    /* ✨ Sparkles */
+    .sparkle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+      z-index: 1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* ❤️ Floating Hearts */
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      animation: floatUp 6s linear forwards;
+      z-index: 2;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.8); opacity: 0; }
+    }
+
+    .proposal-card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 60px;
+      width: 90%;
+      max-width: 800px;
+      min-height: 550px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .proposal-card h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      color: #d63384;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .button-area {
+      position: relative;
+      height: 300px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      padding: 18px 45px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      width: 220px;
+      user-select: none;
+    }
+
+    #yesBtn {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      position: relative;
+      z-index: 5;
+      transition: none;
+      margin-bottom: 20px;
+    }
+    #yesBtn:hover { transform: none !important; cursor: pointer; }
+
+    #noBtn {
+      background: #f8f9fa;
+      color: #764ba2;
+      border: 2px solid #764ba2;
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: left 0.12s ease-out, top 0.12s ease-out;
+      z-index: 10;
+      max-width: 200px;
+    }
+
+    .success-message { display: none; position: relative; }
+    .success-message h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: #d63384;
+      margin-bottom: 15px;
+    }
+
+    /* 💬 Typing text */
+    #typingText {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #764ba2;
+      margin-top: 18px;
+      min-height: 35px;
+    }
+
+    /* 🧸 Stickers */
+    .stickers {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .sticker {
+      font-size: 55px;
+      animation: stickerPop 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes stickerPop {
+      0% { transform: scale(1) rotate(-5deg); }
+      100% { transform: scale(1.15) rotate(5deg); }
+    }
+
+    /* 🎉 Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      animation: fall 3s linear forwards;
+      z-index: 100;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    /* 🎆 Fireworks */
+    .firework {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      z-index: 200;
+      animation: explode 1.2s ease-out forwards;
+    }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(25); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="proposal-card">
+    <div id="proposalContent">
+      <h1>Will you marry me? 💍</h1>
+      <p class="subtitle">
+        I want to spend every single day making you smile. You are my forever. ✨
+      </p>
+
+      <div class="button-area" id="buttonArea">
+        <button id="yesBtn">YES! 💖</button>
+        <button id="noBtn">No, thanks 😅</button>
+      </div>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <h2>Hooray! 🎉</h2>
+
+      <p style="font-size: 1.3rem;">
+        You've made me the happiest person alive! <br>
+        Forever begins today. ❤️
+      </p>
+
+      <!-- 💬 Typing effect -->
+      <div id="typingText"></div>
+
+      <!-- Stickers -->
+      <div class="stickers">
+        <div class="sticker">💍</div>
+        <div class="sticker">💖</div>
+        <div class="sticker">🧸</div>
+        <div class="sticker">😘</div>
+        <div class="sticker">🌹</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const buttonArea = document.getElementById("buttonArea");
+    const proposalContent = document.getElementById("proposalContent");
+    const successMessage = document.getElementById("successMessage");
+    const typingText = document.getElementById("typingText");
+
+
+    const phrases = [
+      "NOOO 😭",
+      "Think again!",
+      "Pleaseeee 🥺",
+      "Click YES 😇",
+      "Wait wait 😭",
+    ];
+
+    let count = 0;
+
+    // Track mouse position
+    window.lastMouseX = 0;
+    window.lastMouseY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      window.lastMouseX = e.clientX;
+      window.lastMouseY = e.clientY;
+    });
+
+    function isMouseInsideButton() {
+      const rect = noBtn.getBoundingClientRect();
+      return (
+        window.lastMouseX >= rect.left &&
+        window.lastMouseX <= rect.right &&
+        window.lastMouseY >= rect.top &&
+        window.lastMouseY <= rect.bottom
+      );
+    }
+
+    function moveNoButton() {
+      const areaRect = buttonArea.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const padding = 10;
+      const maxX = areaRect.width - btnRect.width - padding;
+      const maxY = areaRect.height - btnRect.height - padding;
+
+      let tries = 0;
+
+      while (tries < 20) {
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        noBtn.style.left = (randomX + padding) + "px";
+        noBtn.style.top = (randomY + padding) + "px";
+        noBtn.style.transform = "none";
+
+        noBtn.innerText = phrases[count % phrases.length];
+        count++;
+
+        if (!isMouseInsideButton()) break;
+        tries++;
+      }
+    }
+
+    // NO button events
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("mousemove", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // YES button
+    yesBtn.addEventListener("click", async () => {
+      proposalContent.style.display = "none";
+      successMessage.style.display = "block";
+
+      launchConfetti();
+      startTypingEffect();
+      startFireworks();
+
+      // Auto play music after yes click
+      if (!isPlaying) {
+        try {
+          await bgMusic.play();
+          isPlaying = true;
+          musicBtn.innerText = "⏸ Pause Music";
+        } catch (e) {}
+      }
+    });
+
+    /* 🎉 Confetti */
+    function launchConfetti() {
+      for (let i = 0; i < 120; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.top = "-5vh";
+        conf.style.backgroundColor = ["#f5576c", "#f093fb", "#ffd89b", "#667eea"][Math.floor(Math.random() * 4)];
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 3000);
+      }
+    }
+
+    /* ✨ Sparkles */
+    function createSparkles() {
+      for (let i = 0; i < 55; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+        sparkle.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(sparkle);
+      }
+    }
+
+    /* ❤️ Floating hearts */
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+
+      const heartTypes = ["💖", "💘", "💝", "💕", "❤️"];
+      heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.bottom = "-20px";
+      heart.style.fontSize = (14 + Math.random() * 25) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    /* 💬 Typing effect */
+    function startTypingEffect() {
+      const text = "I love you so much ❤️🥺 Forever and always...";
+      let i = 0;
+      typingText.innerHTML = "";
+
+      const typingInterval = setInterval(() => {
+        typingText.innerHTML += text.charAt(i);
+        i++;
+
+        if (i >= text.length) clearInterval(typingInterval);
+      }, 60);
+    }
+
+    /* 🎆 Fireworks */
+    function createFirework() {
+      const fw = document.createElement("div");
+      fw.className = "firework";
+
+      fw.style.left = Math.random() * 100 + "vw";
+      fw.style.top = (10 + Math.random() * 60) + "vh";
+
+      const colors = ["#ff4d6d", "#f093fb", "#ffd89b", "#667eea", "#00f5d4"];
+      fw.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+      document.body.appendChild(fw);
+      setTimeout(() => fw.remove(), 1200);
+    }
+
+    function startFireworks() {
+      let fireCount = 0;
+      const fireInterval = setInterval(() => {
+        createFirework();
+        fireCount++;
+
+        if (fireCount > 20) clearInterval(fireInterval);
+      }, 250);
+    }
+
+    createSparkles();
+    setInterval(createHeart, 400);
+  </script>
+
+</body>
+</html>
